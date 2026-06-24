@@ -66,115 +66,66 @@ function Appointments() {
     };
 
     return (
-        <div className="container">
+        <div className="appointments-grid">
 
-            <h2>
-                My Appointments
-            </h2>
+            {
+                appointments.length === 0 && (
+                    <h3>
+                        No Appointments Found
+                    </h3>
+                )
+            }
 
-            <table
-                border="1"
-                cellPadding="10"
-            >
+            {appointments.map((appointment) => (
 
-                <thead>
-                    <tr>
-                        <th>Patient Name</th>
-                        <th>Doctor Name</th>
-                        <th>Reason</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
+                <div
+                    key={appointment.id}
+                    className="appointment-card"
+                >
 
-                <tbody>
+                    <h3>
+                        👨‍⚕️ {appointment.doctorName}
+                    </h3>
+
+                    <p>
+                        📅 {appointment.appointmentDate}
+                    </p>
+
+                    <p>
+                        ⏰ {appointment.appointmentTime}
+                    </p>
+
+                    <p>
+                        📝 {appointment.reason}
+                    </p>
+
+                    <div
+                        className={`status-badge ${appointment.status}`}
+                    >
+                        {appointment.status}
+                    </div>
+
                     {
-                        appointments.length === 0 && (
+                        appointment.status !==
+                        "APPROVED" && (
 
-                            <h3>
-                                No Appointments Found
-                            </h3>
+                            <button
+                                className="cancel-btn"
+                                onClick={() =>
+                                    deleteAppointment(
+                                        appointment.id
+                                    )
+                                }
+                            >
+                                Cancel Appointment
+                            </button>
 
                         )
                     }
-                    {appointments.map(
-                        (appointment) => (
 
-                            <tr
-                                key={appointment.id}
-                            >
+                </div>
 
-                                <td>
-                                    {appointment.patientName}
-                                </td>
-
-                                <td>
-                                    {appointment.doctorName}
-                                </td>
-
-                                <td>
-                                    {appointment.reason}
-                                </td>
-
-                                <td>
-                                    {appointment.appointmentDate}
-                                </td>
-
-                                <td>
-                                    {appointment.appointmentTime}
-                                </td>
-
-                                <td>
-
-                                    <span
-                                        style={{
-                                            padding: "5px 10px",
-                                            borderRadius: "20px",
-                                            color: "white",
-                                            backgroundColor:
-                                                appointment.status === "APPROVED"
-                                                    ? "green"
-                                                    : appointment.status === "REJECTED"
-                                                        ? "red"
-                                                        : "orange"
-                                        }}
-                                    >
-                                        {appointment.status}
-                                    </span>
-
-                                </td>
-
-                                <td>
-
-                                    {
-                                        appointment.status !== "APPROVED" && (
-
-                                            <button
-                                                className="btn"
-                                                onClick={() =>
-                                                    deleteAppointment(
-                                                        appointment.id
-                                                    )
-                                                }
-                                            >
-                                                Cancel
-                                            </button>
-
-                                        )
-                                    }
-
-                                </td>
-
-                            </tr>
-
-                        )
-                    )}
-
-                </tbody>
-
-            </table>
+            ))}
 
         </div>
     );

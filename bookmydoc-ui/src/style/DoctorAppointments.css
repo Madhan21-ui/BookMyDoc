@@ -1,0 +1,160 @@
+.doctor-page {
+    padding: 40px;
+    background: #f8fafc;
+    min-height: 100vh;
+}
+
+.page-title {
+    font-size: 40px;
+    color: #1976d2;
+    margin-bottom: 10px;
+}
+
+.page-subtitle {
+    color: #64748b;
+    margin-bottom: 30px;
+}
+
+/* Stats */
+
+.doctor-stats {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    background: white;
+    padding: 25px;
+    min-width: 220px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card h2 {
+    color: #1976d2;
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.stat-card p {
+    color: #64748b;
+}
+
+/* Appointment Grid */
+
+.doctor-appointments-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(380px, 1fr));
+    gap: 25px;
+}
+
+/* Appointment Card */
+
+.doctor-appointment-card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.08);
+    transition: 0.3s;
+}
+
+.doctor-appointment-card:hover {
+    transform: translateY(-5px);
+}
+
+.doctor-appointment-card h3 {
+    color: #1976d2;
+    margin-bottom: 15px;
+}
+
+.appointment-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.appointment-info p {
+    color: #475569;
+}
+
+/* Status */
+
+.status-badge {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 10px 18px;
+    border-radius: 30px;
+    color: white;
+    font-weight: 600;
+}
+
+.status-badge.APPROVED {
+    background: #16a34a;
+}
+
+.status-badge.REJECTED {
+    background: #dc2626;
+}
+
+.status-badge.PENDING {
+    background: #f59e0b;
+}
+
+/* Buttons */
+
+.action-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.approve-btn {
+    flex: 1;
+    background: #16a34a;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.approve-btn:hover {
+    background: #15803d;
+}
+
+.reject-btn {
+    flex: 1;
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.reject-btn:hover {
+    background: #b91c1c;
+}
+
+@media (max-width: 768px) {
+
+    .doctor-page {
+        padding: 20px;
+    }
+
+    .doctor-appointments-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .doctor-stats {
+        flex-direction: column;
+    }
+}

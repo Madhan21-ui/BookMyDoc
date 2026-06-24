@@ -25,9 +25,9 @@ function Hero() {
           transition={{ duration: 0.7 }}
           className="hero-title"
         >
-          Your Health,
+          Find Trusted Doctors &
           <br />
-          Our Priority
+          Book Appointments Online
         </motion.h1>
 
         <motion.p
@@ -72,12 +72,12 @@ function Hero() {
         >
 
           <div className="hero-stat-card">
-            <h2>500+</h2>
+            <h2>8+</h2>
             <p>Doctors</p>
           </div>
 
           <div className="hero-stat-card">
-            <h2>10K+</h2>
+            <h2>100+</h2>
             <p>Patients</p>
           </div>
 

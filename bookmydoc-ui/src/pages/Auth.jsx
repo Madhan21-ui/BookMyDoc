@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
-import "../style/Auth.css";
+import "../style/UserAuth.css";
 
 function Auth() {
 

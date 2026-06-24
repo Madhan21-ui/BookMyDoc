@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import "../style/DoctorAppointments.css";
 
 function DoctorAppointments() {
 
@@ -8,6 +9,9 @@ function DoctorAppointments() {
 
     const doctorId =
         localStorage.getItem("doctorId");
+
+    const doctorName =
+        localStorage.getItem("doctorName");
 
     const fetchAppointments = async () => {
 
@@ -67,109 +71,150 @@ function DoctorAppointments() {
 
     return (
 
-        <div
-            style={{
-                padding: "30px"
-            }}
-        >
+        <div className="doctor-page">
 
-            <h2>
-                Appointment Requests
-            </h2>
+            <h1 className="page-title">
+                Welcome {doctorName} 👨‍⚕️
+            </h1>
+
+            <p className="page-subtitle">
+                Manage and review patient appointment requests
+            </p>
+
+            <div className="doctor-stats">
+
+                <div className="stat-card">
+                    <h2>
+                        {appointments.length}
+                    </h2>
+                    <p>
+                        Total Requests
+                    </p>
+                </div>
+
+                <div className="stat-card">
+                    <h2>
+                        {
+                            appointments.filter(
+                                appointment =>
+                                    appointment.status === "APPROVED"
+                            ).length
+                        }
+                    </h2>
+                    <p>
+                        Approved
+                    </p>
+                </div>
+
+                <div className="stat-card">
+                    <h2>
+                        {
+                            appointments.filter(
+                                appointment =>
+                                    appointment.status === "PENDING"
+                            ).length
+                        }
+                    </h2>
+                    <p>
+                        Pending
+                    </p>
+                </div>
+
+            </div>
 
             {appointments.length === 0 ? (
 
-                <p>
-                    No Appointments Found
-                </p>
+                <h3>
+                    No Appointment Requests Found
+                </h3>
 
             ) : (
 
-                appointments.map(
-                    (appointment) => (
+                <div className="doctor-appointments-grid">
+
+                    {appointments.map((appointment) => (
 
                         <div
                             key={appointment.id}
-                            style={{
-                                border:
-                                    "1px solid #ddd",
-                                padding:
-                                    "15px",
-                                marginBottom:
-                                    "15px",
-                                borderRadius:
-                                    "10px"
-                            }}
+                            className="doctor-appointment-card"
                         >
 
                             <h3>
-                                {appointment.patientName}
+                                👤 {appointment.patientName}
                             </h3>
 
-                            <p>
-                                📞 {appointment.phoneNumber}
-                            </p>
+                            <div className="appointment-info">
 
-                            <p>
-                                📅 {appointment.appointmentDate}
-                            </p>
+                                <p>
+                                    📧 {appointment.userEmail}
+                                </p>
 
-                            <p>
-                                ⏰ {appointment.appointmentTime}
-                            </p>
+                                <p>
+                                    📞 {appointment.phoneNumber}
+                                </p>
 
-                            <p>
-                                📝 {appointment.reason}
-                            </p>
+                                <p>
+                                    📅 {appointment.appointmentDate}
+                                </p>
 
-                            <p>
-                                Status:
-                                {" "}
-                                <strong>
-                                    {appointment.status}
-                                </strong>
-                            </p>
+                                <p>
+                                    ⏰ {appointment.appointmentTime}
+                                </p>
 
-                            {appointment.status ===
-                                "PENDING" && (
+                                <p>
+                                    📝 {appointment.reason}
+                                </p>
 
-                                    <>
+                            </div>
+
+                            <div
+                                className={`status-badge ${appointment.status}`}
+                            >
+                                {appointment.status}
+                            </div>
+
+                            {
+                                appointment.status === "PENDING" && (
+
+                                    <div className="action-buttons">
 
                                         <button
+                                            className="approve-btn"
                                             onClick={() =>
                                                 approveAppointment(
                                                     appointment.id
                                                 )
                                             }
                                         >
-                                            Approve
+                                            ✓ Approve
                                         </button>
 
                                         <button
+                                            className="reject-btn"
                                             onClick={() =>
                                                 rejectAppointment(
                                                     appointment.id
                                                 )
                                             }
-                                            style={{
-                                                marginLeft:
-                                                    "10px"
-                                            }}
                                         >
-                                            Reject
+                                            ✕ Reject
                                         </button>
 
-                                    </>
+                                    </div>
 
-                                )}
+                                )
+                            }
 
                         </div>
-                    )
-                )
+
+                    ))}
+
+                </div>
 
             )}
 
         </div>
+
     );
 }
 

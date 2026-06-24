@@ -1,0 +1,150 @@
+.doctor-login-container {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background:
+        linear-gradient(135deg,
+            #1976d2,
+            #42a5f5);
+
+    padding: 20px;
+}
+
+.doctor-login-card {
+
+    width: 100%;
+    max-width: 450px;
+
+    background: white;
+
+    border-radius: 24px;
+
+    padding: 40px;
+
+    text-align: center;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.15);
+
+    animation:
+        fadeIn 0.5s ease;
+}
+
+.doctor-icon {
+
+    font-size: 70px;
+
+    margin-bottom: 15px;
+}
+
+.doctor-login-card h2 {
+
+    color: #1976d2;
+
+    font-size: 32px;
+
+    margin-bottom: 10px;
+}
+
+.doctor-login-card p {
+
+    color: #64748b;
+
+    margin-bottom: 25px;
+}
+
+.doctor-login-form {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+}
+
+.doctor-login-form input {
+
+    padding: 14px 16px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 12px;
+
+    font-size: 16px;
+
+    outline: none;
+
+    transition: 0.3s;
+}
+
+.doctor-login-form input:focus {
+
+    border-color: #1976d2;
+
+    box-shadow:
+        0 0 0 4px rgba(25, 118, 210, 0.12);
+}
+
+.doctor-login-form button {
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(135deg,
+            #1976d2,
+            #42a5f5);
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.doctor-login-form button:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 12px 25px rgba(25, 118, 210, 0.25);
+}
+
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+
+    .doctor-login-card {
+
+        padding: 30px 20px;
+    }
+
+    .doctor-login-card h2 {
+
+        font-size: 28px;
+    }
+}

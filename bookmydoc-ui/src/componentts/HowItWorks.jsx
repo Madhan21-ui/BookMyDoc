@@ -11,23 +11,23 @@ import "../style/LandingPage.css";
 const STEPS = [
   {
     icon: Search,
-    title: "Search Doctor",
-    desc: "Browse by speciality, name, or location to find the right fit."
+    title: "Find a Doctor",
+    desc: "Search and explore experienced doctors based on speciality and expertise."
   },
   {
     icon: CalendarCheck,
-    title: "Select Time Slot",
-    desc: "View real-time availability and pick a slot that works for you."
+    title: "Choose a Time Slot",
+    desc: "Check real-time availability and select a convenient appointment slot."
   },
   {
     icon: BadgeCheck,
-    title: "Confirm Appointment",
-    desc: "Lock in your booking instantly with a confirmation in seconds."
+    title: "Book Appointment",
+    desc: "Confirm your appointment instantly with secure booking."
   },
   {
     icon: Stethoscope,
-    title: "Visit Doctor",
-    desc: "Show up at your scheduled time."
+    title: "Consult Doctor",
+    desc: "Meet your doctor at the scheduled date and time."
   }
 ];
 
@@ -43,6 +43,10 @@ function HowItWorks() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
+          whileHover={{
+            y: -8,
+            scale: 1.03
+          }}
           className="how-header"
         >
 
@@ -51,7 +55,7 @@ function HowItWorks() {
           </span>
 
           <h2>
-            Booking Made Effortless
+            Book Your Appointment in 4 Simple Steps
           </h2>
 
         </motion.div>

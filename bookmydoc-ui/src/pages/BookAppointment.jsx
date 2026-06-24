@@ -244,17 +244,11 @@ function BookAppointment() {
                                             })
                                         )
                                     }
-                                    style={{
-                                        margin: "5px",
-                                        padding:
-                                            "10px",
-                                        border:
-                                            "1px solid #1976d2",
-                                        borderRadius:
-                                            "5px",
-                                        cursor:
-                                            "pointer"
-                                    }}
+                                    className={
+                                        appointment.appointmentTime === slot.slotTime
+                                            ? "slot-btn selected-slot"
+                                            : "slot-btn"
+                                    }
                                 >
                                     {slot.slotTime}
                                 </button>
@@ -264,11 +258,18 @@ function BookAppointment() {
 
                 </div>
 
-                <p>
-                    Selected Slot:
-                    {" "}
-                    {appointment.appointmentTime}
-                </p>
+                {appointment.appointmentTime && (
+                    <div className="selected-slot-card">
+                        <h4>📅 Appointment Summary</h4>
+                        <p>
+                            Selected Slot:
+                            <strong>
+                                {" "}
+                                {appointment.appointmentTime}
+                            </strong>
+                        </p>
+                    </div>
+                )}
 
                 <button
                     className="book-btn"

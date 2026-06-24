@@ -7,6 +7,7 @@ function Doctors() {
     const [doctors, setDoctors] = useState([]);
 
     useEffect(() => {
+
         api.get("/doctors")
             .then((response) => {
                 setDoctors(response.data);
@@ -14,17 +15,19 @@ function Doctors() {
             .catch((error) => {
                 console.error(error);
             });
+
     }, []);
 
     return (
+
         <div className="doctors-container">
 
             <h1 className="page-title">
-                Find Your Doctor
+                Find the Right Doctor for Your Healthcare Needs
             </h1>
 
             <p className="page-subtitle">
-                Book appointments with experienced specialists
+                Browse experienced specialists and book appointments instantly.
             </p>
 
             <div className="doctors-grid">
@@ -36,13 +39,14 @@ function Doctors() {
                         className="doctor-card"
                     >
 
-                        <div className="doctor-header"></div>
-
                         <div className="doctor-avatar">
-                            👨‍⚕️
-                        </div>
+                            {doctor.name.replace("Dr. ", "").charAt(0)}                        </div>
 
                         <div className="doctor-body">
+
+                            <div className="doctor-rating">
+                                ⭐ 4.8
+                            </div>
 
                             <h2 className="doctor-name">
                                 {doctor.name}
@@ -52,22 +56,33 @@ function Doctors() {
                                 {doctor.specialization}
                             </p>
 
-                            <p className="doctor-hospital">
-                                🏥 {doctor.hospitalName}
-                            </p>
+                            <div className="doctor-info">
 
-                            <p className="doctor-exp">
-                                🏥 Experience: {doctor.experience} Years
-                            </p>
+                                <p>
+                                    🏥 {doctor.hospitalName}
+                                </p>
 
-                         
+                                <p>
+                                    📍 {doctor.location}
+                                </p>
 
-                            <br />
-                            <br />
+                                <p>
+                                    👨‍⚕️ {doctor.experience} Years Experience
+                                </p>
 
-                            <Link to={`/doctors/${doctor.id}`}>
-                                <button className="book-btn">
-                                    View Profile
+                            </div>
+
+                            <div className="doctor-status">
+                                🟢 Available Today
+                            </div>
+
+                            <Link
+                                to={`/doctors/${doctor.id}`}
+                            >
+                                <button
+                                    className="book-btn"
+                                >
+                                    View Profile →
                                 </button>
                             </Link>
 
@@ -80,6 +95,7 @@ function Doctors() {
             </div>
 
         </div>
+
     );
 }
 

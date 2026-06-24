@@ -7,15 +7,9 @@ function Navbar() {
 
     const isDoctorLoggedIn =
         localStorage.getItem("doctorId");
-    console.log(
-        "doctorId = ",
-        localStorage.getItem("doctorId")
-    );
 
-    console.log(
-        "isDoctorLoggedIn = ",
-        isDoctorLoggedIn
-    );
+    const doctorName =
+        localStorage.getItem("doctorName");
 
     const handleLogout = () => {
 
@@ -39,14 +33,28 @@ function Navbar() {
                 justifyContent: "space-between",
                 alignItems: "center",
                 padding: "15px 40px",
-                background: "#1976d2",
+                background:
+                    "linear-gradient(135deg, #1976d2, #42a5f5)",
                 color: "white"
             }}
         >
 
-            <h2>
-                🏥 BookMyDoc
-            </h2>
+            <Link
+                to="/"
+                style={{
+                    color: "white",
+                    textDecoration: "none"
+                }}
+            >
+                <h2
+                    style={{
+                        margin: 0,
+                        fontWeight: "700"
+                    }}
+                >
+                    🏥 BookMyDoc
+                </h2>
+            </Link>
 
             <div
                 style={{
@@ -59,6 +67,7 @@ function Navbar() {
                 {isDoctorLoggedIn ? (
 
                     <>
+
                         <Link
                             to="/doctor-dashboard"
                             style={{
@@ -68,6 +77,7 @@ function Navbar() {
                         >
                             Dashboard
                         </Link>
+
                         <Link
                             to="/doctor-profile"
                             style={{
@@ -77,6 +87,7 @@ function Navbar() {
                         >
                             Profile
                         </Link>
+
                         <Link
                             to="/doctor-availability"
                             style={{
@@ -84,7 +95,7 @@ function Navbar() {
                                 textDecoration: "none"
                             }}
                         >
-                            Availability
+                            Slots
                         </Link>
 
                         <Link
@@ -97,10 +108,20 @@ function Navbar() {
                             Appointments
                         </Link>
 
+                        <span
+                            style={{
+                                color: "white",
+                                fontWeight: "600"
+                            }}
+                        >
+                            👨‍⚕️ {doctorName}
+                        </span>
+
                         <button
                             onClick={handleLogout}
                             style={{
-                                padding: "8px 16px",
+                                padding: "10px 18px",
+                                fontSize: "14px",
                                 border: "none",
                                 borderRadius: "8px",
                                 cursor: "pointer",
@@ -111,11 +132,13 @@ function Navbar() {
                         >
                             Logout
                         </button>
+
                     </>
 
                 ) : isLoggedIn ? (
 
                     <>
+
                         <Link
                             to="/dashboard"
                             style={{
@@ -139,7 +162,7 @@ function Navbar() {
                         <button
                             onClick={handleLogout}
                             style={{
-                                padding: "8px 16px",
+                                padding: "10px 18px",
                                 border: "none",
                                 borderRadius: "8px",
                                 cursor: "pointer",
@@ -150,11 +173,13 @@ function Navbar() {
                         >
                             Logout
                         </button>
+
                     </>
 
                 ) : (
 
                     <>
+
                         <Link
                             to="/"
                             style={{
@@ -196,6 +221,7 @@ function Navbar() {
                         >
                             Doctor Login
                         </Link>
+
                     </>
 
                 )}
@@ -203,6 +229,7 @@ function Navbar() {
             </div>
 
         </nav>
+
     );
 }
 

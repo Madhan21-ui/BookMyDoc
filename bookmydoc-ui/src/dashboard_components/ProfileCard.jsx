@@ -36,7 +36,7 @@ function ProfileCard() {
             <div className="profile-card">
 
                 <div className="profile-avatar">
-                    👤
+                    {user.name?.charAt(0).toUpperCase()}
                 </div>
 
                 <div className="profile-details">

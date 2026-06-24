@@ -46,17 +46,20 @@ function DoctorDetails() {
                     <p className="specialization">
                         {doctor.specialization}
                     </p>
-
                     <div className="doctor-badges">
                         <span>⭐ 4.8 Rating</span>
+                        <span>🟢 Available Today</span>
                     </div>
-
+                  
                     <div className="doctor-info-grid">
-
-                        <div className="info-box">
+                         <div className="info-box">
                             <h3>Experience</h3>
                             <p>{doctor.experience} Years</p>
-                        </div>
+                            </div>
+                            <div className="info-box">
+                                <h3>Hospital</h3>
+                                <p>{doctor.hospitalName}</p>
+                            </div>
 
                         <div className="info-box">
                             <h3>Location</h3>
@@ -67,28 +70,23 @@ function DoctorDetails() {
                             <h3>Consultation Fee</h3>
                             <p>₹500</p>
                         </div>
-
-                        <div className="info-box">
-                            <h3>Availability</h3>
-                            <p>Mon - Sat</p>
-                        </div>
-
                     </div>
 
                     <div className="doctor-about">
                         <h2>About Doctor</h2>
 
                         <p>
-                            Experienced {doctor.specialization} specialist
-                            dedicated to providing high-quality healthcare and
-                            patient-centered treatment. Skilled in diagnosis,
-                            consultation, and advanced medical care.
+                            {doctor.name} is an experienced
+                            {doctor.specialization} specialist with
+                            {doctor.experience}+ years of experience
+                            providing quality healthcare and
+                            patient-focused treatment.
                         </p>
                     </div>
 
                     <Link to={`/book?doctorId=${doctor.id}`}>
                         <button className="book-now-btn">
-                            Book Appointment
+                            📅 Book Appointment
                         </button>
                     </Link>
                 </div>

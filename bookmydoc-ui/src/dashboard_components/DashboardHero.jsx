@@ -55,11 +55,15 @@ function DashboardHero() {
                     {greeting}, {userName} 👋
                 </h1>
 
+                <span className="welcome-badge">
+                    🏥 Trusted Healthcare Platform
+                </span>
+
                 <p>
-                    Welcome back to BookMyDoc.
-                    Manage your appointments,
-                    discover specialists,
-                    and take control of your healthcare journey.
+                    Book appointments with trusted doctors,
+                    manage your healthcare records,
+                    and stay connected with specialists
+                    all in one place.
                 </p>
 
                 <div className="dashboard-buttons">

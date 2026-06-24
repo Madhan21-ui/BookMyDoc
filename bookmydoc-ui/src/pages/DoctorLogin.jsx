@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api from "../services/api";
+import "../style/DoctorLogin.css";
 
 function DoctorLogin() {
 
@@ -27,8 +28,6 @@ function DoctorLogin() {
                 loginData
             );
 
-            console.log(response.data);
-
             if (response.data) {
 
                 localStorage.setItem(
@@ -44,11 +43,6 @@ function DoctorLogin() {
                 localStorage.setItem(
                     "doctorEmail",
                     response.data.email
-                );
-
-                console.log(
-                    "Saved Doctor ID:",
-                    localStorage.getItem("doctorId")
                 );
 
                 alert(
@@ -71,20 +65,31 @@ function DoctorLogin() {
 
     return (
 
-        <div className="auth-container">
+        <div className="doctor-login-container">
 
-            <div className="auth-box">
+            <div className="doctor-login-card">
 
-                <form onSubmit={handleLogin}>
+                <div className="doctor-icon">
+                    👨‍⚕️
+                </div>
 
-                    <h2>
-                        Doctor Login
-                    </h2>
+                <h2>
+                    Doctor Login
+                </h2>
+
+                <p>
+                    Access your dashboard and manage appointments
+                </p>
+
+                <form
+                    onSubmit={handleLogin}
+                    className="doctor-login-form"
+                >
 
                     <input
                         type="email"
                         name="email"
-                        placeholder="Email"
+                        placeholder="Enter Email"
                         value={loginData.email}
                         onChange={handleChange}
                         required
@@ -93,7 +98,7 @@ function DoctorLogin() {
                     <input
                         type="password"
                         name="password"
-                        placeholder="Password"
+                        placeholder="Enter Password"
                         value={loginData.password}
                         onChange={handleChange}
                         required
