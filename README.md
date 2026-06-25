@@ -8,9 +8,7 @@
 
 A modern healthcare appointment booking platform that allows patients to find doctors, book appointments, and track appointment status while enabling doctors to manage availability and appointment requests.
 
-🎥 **Project Demo Video**
 
-[PASTE_YOUR_GITHUB_VIDEO_LINK_HERE]
 
 ⭐ If you found this project useful, consider giving it a star.
 
