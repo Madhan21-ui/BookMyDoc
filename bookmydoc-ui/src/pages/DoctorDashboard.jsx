@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../services/api";
 
 function DoctorDashboard() {
 
@@ -7,24 +9,117 @@ function DoctorDashboard() {
     const doctorName =
         localStorage.getItem("doctorName");
 
+    const doctorId =
+        localStorage.getItem("doctorId");
+
+    const [slotCount, setSlotCount] =
+        useState(0);
+
+    const [appointmentCount, setAppointmentCount] =
+        useState(0);
+
+    const [pendingCount, setPendingCount] =
+        useState(0);
+
+    const [approvedCount, setApprovedCount] =
+        useState(0);
+
+    const [appointments, setAppointments] =
+        useState([]);
+
+    useEffect(() => {
+
+        fetchSlots();
+        fetchAppointments();
+
+    }, []);
+
+    const fetchSlots = async () => {
+
+        try {
+
+            const response =
+                await api.get(
+                    `/availability/doctor/${doctorId}`
+                );
+
+            setSlotCount(
+                response.data.length
+            );
+
+        } catch (error) {
+
+            console.error(error);
+        }
+    };
+
+    const fetchAppointments = async () => {
+
+        try {
+
+            const response =
+                await api.get(
+                    `/appointments/doctor/${doctorId}`
+                );
+
+            setAppointments(
+                response.data
+            );
+
+            setAppointmentCount(
+                response.data.length
+            );
+
+            const pending =
+                response.data.filter(
+                    appointment =>
+                        appointment.status ===
+                        "PENDING"
+                ).length;
+
+            const approved =
+                response.data.filter(
+                    appointment =>
+                        appointment.status ===
+                        "APPROVED"
+                ).length;
+
+            setPendingCount(
+                pending
+            );
+
+            setApprovedCount(
+                approved
+            );
+
+        } catch (error) {
+
+            console.error(error);
+        }
+    };
+
     return (
 
         <div
             style={{
                 padding: "40px",
-                backgroundColor: "#f5f7fb",
+                background: "#f8fafc",
                 minHeight: "100vh"
             }}
         >
 
+            {/* Header */}
+
             <div
                 style={{
-                    marginBottom: "30px"
+                    marginBottom: "35px"
                 }}
             >
+
                 <h1
                     style={{
-                        color: "#1e293b",
+                        fontSize: "42px",
+                        color: "#0f172a",
                         marginBottom: "10px"
                     }}
                 >
@@ -41,9 +136,19 @@ function DoctorDashboard() {
                 >
                     Manage your appointments and availability
                 </p>
+
+                <p
+                    style={{
+                        color: "#94a3b8",
+                        marginTop: "10px"
+                    }}
+                >
+                    {new Date().toDateString()}
+                </p>
+
             </div>
 
-            {/* Stats Cards */}
+            {/* Stats */}
 
             <div
                 style={{
@@ -51,75 +156,37 @@ function DoctorDashboard() {
                     gridTemplateColumns:
                         "repeat(auto-fit,minmax(220px,1fr))",
                     gap: "20px",
-                    marginBottom: "40px"
+                    marginBottom: "45px"
                 }}
             >
 
-                <div
-                    style={{
-                        background: "#ffffff",
-                        padding: "25px",
-                        borderRadius: "16px",
-                        boxShadow:
-                            "0 4px 12px rgba(0,0,0,0.08)"
-                    }}
-                >
-                    <h2>📅</h2>
-                    <h3>Total Slots</h3>
-                    <p
-                        style={{
-                            fontSize: "28px",
-                            fontWeight: "bold",
-                            color: "#1976d2"
-                        }}
-                    >
-                        --
-                    </p>
-                </div>
+                <DashboardCard
+                    icon="📅"
+                    title="Total Slots"
+                    value={slotCount}
+                    color="#1976d2"
+                />
 
-                <div
-                    style={{
-                        background: "#ffffff",
-                        padding: "25px",
-                        borderRadius: "16px",
-                        boxShadow:
-                            "0 4px 12px rgba(0,0,0,0.08)"
-                    }}
-                >
-                    <h2>👥</h2>
-                    <h3>Appointments</h3>
-                    <p
-                        style={{
-                            fontSize: "28px",
-                            fontWeight: "bold",
-                            color: "#1976d2"
-                        }}
-                    >
-                        --
-                    </p>
-                </div>
+                <DashboardCard
+                    icon="👥"
+                    title="Appointments"
+                    value={appointmentCount}
+                    color="#16a34a"
+                />
 
-                <div
-                    style={{
-                        background: "#ffffff",
-                        padding: "25px",
-                        borderRadius: "16px",
-                        boxShadow:
-                            "0 4px 12px rgba(0,0,0,0.08)"
-                    }}
-                >
-                    <h2>⏳</h2>
-                    <h3>Pending Requests</h3>
-                    <p
-                        style={{
-                            fontSize: "28px",
-                            fontWeight: "bold",
-                            color: "#1976d2"
-                        }}
-                    >
-                        --
-                    </p>
-                </div>
+                <DashboardCard
+                    icon="⏳"
+                    title="Pending"
+                    value={pendingCount}
+                    color="#f59e0b"
+                />
+
+                <DashboardCard
+                    icon="✅"
+                    title="Approved"
+                    value={approvedCount}
+                    color="#22c55e"
+                />
 
             </div>
 
@@ -127,7 +194,8 @@ function DoctorDashboard() {
 
             <h2
                 style={{
-                    marginBottom: "20px"
+                    marginBottom: "20px",
+                    color: "#0f172a"
                 }}
             >
                 Quick Actions
@@ -137,108 +205,197 @@ function DoctorDashboard() {
                 style={{
                     display: "grid",
                     gridTemplateColumns:
-                        "repeat(auto-fit,minmax(250px,1fr))",
+                        "repeat(auto-fit,minmax(260px,1fr))",
                     gap: "20px"
                 }}
             >
 
-                <div
+                <ActionCard
+                    icon="📅"
+                    title="Manage Availability"
+                    desc="Create and manage slots"
                     onClick={() =>
                         navigate(
                             "/doctor-availability"
                         )
                     }
-                    style={{
-                        background: "#ffffff",
-                        padding: "30px",
-                        borderRadius: "16px",
-                        cursor: "pointer",
-                        boxShadow:
-                            "0 4px 12px rgba(0,0,0,0.08)"
-                    }}
-                >
-                    <h2>📅</h2>
-                    <h3>
-                        Manage Availability
-                    </h3>
-                    <p>
-                        Create and manage slots
-                    </p>
-                </div>
+                />
 
-                <div
+                <ActionCard
+                    icon="👥"
+                    title="Appointments"
+                    desc="View patient requests"
                     onClick={() =>
                         navigate(
                             "/doctor-appointments"
                         )
                     }
-                    style={{
-                        background: "#ffffff",
-                        padding: "30px",
-                        borderRadius: "16px",
-                        cursor: "pointer",
-                        boxShadow:
-                            "0 4px 12px rgba(0,0,0,0.08)"
-                    }}
-                >
-                    <h2>👥</h2>
-                    <h3>
-                        Appointments
-                    </h3>
-                    <p>
-                        View patient requests
-                    </p>
-                </div>
+                />
 
-                <div
+                <ActionCard
+                    icon="🕒"
+                    title="Previous Slots"
+                    desc="Review slot history"
                     onClick={() =>
                         navigate(
                             "/doctor-slots"
                         )
                     }
-                    style={{
-                        background: "#ffffff",
-                        padding: "30px",
-                        borderRadius: "16px",
-                        cursor: "pointer",
-                        boxShadow:
-                            "0 4px 12px rgba(0,0,0,0.08)"
-                    }}
-                >
-                    <h2>🕒</h2>
-                    <h3>
-                        Previous Slots
-                    </h3>
-                    <p>
-                        Review availability history
-                    </p>
-                </div>
+                />
 
-                <div
+                <ActionCard
+                    icon="👨‍⚕️"
+                    title="My Profile"
+                    desc="Update doctor information"
                     onClick={() =>
                         navigate(
                             "/doctor-profile"
                         )
                     }
-                    style={{
-                        background: "#ffffff",
-                        padding: "30px",
-                        borderRadius: "16px",
-                        cursor: "pointer",
-                        boxShadow:
-                            "0 4px 12px rgba(0,0,0,0.08)"
-                    }}
-                >
-                    <h2>👤</h2>
-                    <h3>
-                        My Profile
-                    </h3>
-                    <p>
-                        Update doctor details
-                    </p>
-                </div>
+                />
 
             </div>
+
+            {/* Recent Requests */}
+
+            <h2
+                style={{
+                    marginTop: "50px",
+                    marginBottom: "20px",
+                    color: "#0f172a"
+                }}
+            >
+                Recent Appointment Requests
+            </h2>
+
+            <div
+                style={{
+                    background: "white",
+                    borderRadius: "20px",
+                    padding: "20px",
+                    boxShadow:
+                        "0 10px 25px rgba(0,0,0,0.08)"
+                }}
+            >
+
+                {
+                    appointments.length === 0 ? (
+
+                        <h3>
+                            No Appointment Requests
+                        </h3>
+
+                    ) : (
+
+                        appointments
+                            .slice(0, 5)
+                            .map((appointment) => (
+
+                                <div
+                                    key={appointment.id}
+                                    style={{
+                                        padding: "15px",
+                                        borderBottom:
+                                            "1px solid #e5e7eb"
+                                    }}
+                                >
+
+                                    <h4>
+                                        👤 {appointment.patientName}
+                                    </h4>
+
+                                    <p>
+                                        📅 {appointment.appointmentDate}
+                                    </p>
+
+                                    <p>
+                                        ⏰ {appointment.appointmentTime}
+                                    </p>
+
+                                    <p>
+                                        Status:
+                                        {" "}
+                                        <strong>
+                                            {appointment.status}
+                                        </strong>
+                                    </p>
+
+                                </div>
+
+                            ))
+
+                    )
+                }
+
+            </div>
+
+        </div>
+    );
+}
+
+function DashboardCard({
+    icon,
+    title,
+    value,
+    color
+}) {
+
+    return (
+
+        <div
+            style={{
+                background: "white",
+                padding: "25px",
+                borderRadius: "20px",
+                boxShadow:
+                    "0 10px 25px rgba(0,0,0,0.08)"
+            }}
+        >
+
+            <h2>{icon}</h2>
+
+            <h3>{title}</h3>
+
+            <p
+                style={{
+                    fontSize: "34px",
+                    fontWeight: "bold",
+                    color
+                }}
+            >
+                {value}
+            </p>
+
+        </div>
+    );
+}
+
+function ActionCard({
+    icon,
+    title,
+    desc,
+    onClick
+}) {
+
+    return (
+
+        <div
+            onClick={onClick}
+            style={{
+                background: "white",
+                padding: "30px",
+                borderRadius: "18px",
+                cursor: "pointer",
+                boxShadow:
+                    "0 10px 25px rgba(0,0,0,0.08)"
+            }}
+        >
+
+            <h2>{icon}</h2>
+
+            <h3>{title}</h3>
+
+            <p>{desc}</p>
 
         </div>
     );

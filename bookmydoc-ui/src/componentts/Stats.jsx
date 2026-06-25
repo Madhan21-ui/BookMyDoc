@@ -3,7 +3,7 @@ import { Users, Stethoscope, Layers, Headset } from "lucide-react";
 import "../style/LandingPage.css";
 const STATS = [
   { icon: Users, value: "10,000+", label: "Patients" },
-  { icon: Stethoscope, value: "500+", label: "Doctors" },
+  { icon: Stethoscope, value: "8+", label: "Doctors" },
   { icon: Layers, value: "50+", label: "Specialities" },
   { icon: Headset, value: "24/7", label: "Support" },
 ];
