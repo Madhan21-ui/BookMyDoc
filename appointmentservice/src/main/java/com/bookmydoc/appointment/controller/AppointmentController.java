@@ -1,5 +1,4 @@
 package com.bookmydoc.appointment.controller;
-
 import com.bookmydoc.appointment.entity.Appointment;
 import com.bookmydoc.appointment.repository.AppointmentRepository;
 import org.springframework.web.bind.annotation.*;
