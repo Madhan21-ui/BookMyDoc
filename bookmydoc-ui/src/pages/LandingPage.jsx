@@ -8,7 +8,7 @@ import TopDoctors from "../componentts/TopDoctors";
 import HowItWorks from "../componentts/HowItWorks";
 import WhyChooseUs from "../componentts/WhyChooseUs";
 import Testimonials from "../componentts/Testimonials";
-import CTA from "../componentts/CTA";
+import CTA from "../componentts/CTA.jsx";
 import Footer from "../componentts/Footer";
 function LandingPage() {
     const { hash } = useLocation();
