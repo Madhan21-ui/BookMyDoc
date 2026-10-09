@@ -1,0 +1,430 @@
+/* ==========================================================
+   DOCTOR DASHBOARD
+========================================================== */
+
+.dd-page {
+    --primary: #2563eb;
+    --primary-soft: #eff6ff;
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+    --text: #0f172a;
+    --text-soft: #475569;
+    --text-muted: #64748b;
+    --radius: 14px;
+    --shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+    --shadow-hover: 0 8px 24px rgba(15, 23, 42, 0.08);
+
+    min-height: 100vh;
+    padding: 40px 20px 60px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+.dd-page *,
+.dd-page *::before,
+.dd-page *::after {
+    box-sizing: border-box;
+}
+
+.dd-page h1,
+.dd-page h2,
+.dd-page h3,
+.dd-page h4,
+.dd-page p {
+    margin: 0;
+}
+
+.dd-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.tone-blue {
+    --tone: #2563eb;
+    --tone-soft: #eff6ff;
+}
+
+.tone-violet {
+    --tone: #7c3aed;
+    --tone-soft: #f3ecff;
+}
+
+.tone-amber {
+    --tone: #d97706;
+    --tone-soft: #fff4dc;
+}
+
+.tone-green {
+    --tone: #16a34a;
+    --tone-soft: #e3f8ea;
+}
+
+/* ---------- Header ---------- */
+
+.dd-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding: 28px 32px;
+    background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+    border-radius: 18px;
+    color: #fff;
+}
+
+.dd-greeting {
+    margin-bottom: 4px !important;
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.dd-header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.dd-subtitle {
+    margin-top: 6px !important;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.dd-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+    font-size: 13.5px;
+    font-weight: 500;
+}
+
+/* ---------- Stats ---------- */
+
+.dd-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+}
+
+.dd-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 22px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.dd-stat-card:hover {
+    border-color: var(--tone);
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+}
+
+.dd-stat-icon {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+    border-radius: 12px;
+    background: var(--tone-soft);
+}
+
+.dd-stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--tone);
+}
+
+.dd-stat-title {
+    margin-top: 4px !important;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+/* ---------- Sections ---------- */
+
+.dd-section {
+    margin-bottom: 40px;
+}
+
+.dd-section-header {
+    margin-bottom: 18px;
+}
+
+.dd-section-header.row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.dd-section-header h2 {
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.dd-section-header p {
+    margin-top: 2px !important;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.dd-link-btn {
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--primary);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.dd-link-btn:hover {
+    background: var(--primary-soft);
+    border-color: var(--primary);
+}
+
+/* ---------- Quick actions ---------- */
+
+.dd-actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.dd-action-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.dd-action-card:hover {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+}
+
+.dd-action-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    font-size: 22px;
+    border-radius: 12px;
+    background: var(--primary-soft);
+}
+
+.dd-action-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.dd-action-text h3 {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.dd-action-text p {
+    margin-top: 2px !important;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.dd-action-arrow {
+    color: var(--text-muted);
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.dd-action-card:hover .dd-action-arrow {
+    color: var(--primary);
+    transform: translateX(3px);
+}
+
+/* ---------- Recent requests ---------- */
+
+.dd-requests {
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.dd-request-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s ease;
+}
+
+.dd-request-row:last-child {
+    border-bottom: none;
+}
+
+.dd-request-row:hover {
+    background: #f8fafc;
+}
+
+.dd-request-avatar {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.dd-request-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.dd-request-info h4 {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.dd-request-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    margin-top: 3px;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.dd-badge {
+    flex-shrink: 0;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.dd-badge.PENDING {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.dd-badge.APPROVED {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.dd-badge.REJECTED,
+.dd-badge.CANCELLED {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.dd-empty {
+    padding: 48px 24px;
+    text-align: center;
+}
+
+.dd-empty-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 14px;
+    display: grid;
+    place-items: center;
+    font-size: 30px;
+    border-radius: 18px;
+    background: var(--primary-soft);
+}
+
+.dd-empty h3 {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.dd-empty p {
+    margin-top: 4px !important;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1024px) {
+
+    .dd-stats,
+    .dd-actions {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .dd-page {
+        padding: 20px 14px 40px;
+    }
+
+    .dd-header {
+        padding: 22px 20px;
+    }
+
+    .dd-header h1 {
+        font-size: 26px;
+    }
+
+    .dd-stat-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 18px;
+    }
+
+    .dd-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .dd-request-row {
+        flex-wrap: wrap;
+        padding: 14px 16px;
+    }
+
+    .dd-badge {
+        margin-left: 60px;
+    }
+}

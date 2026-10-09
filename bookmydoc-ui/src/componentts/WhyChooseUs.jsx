@@ -1,122 +1,35 @@
-import { motion } from "framer-motion";
-import {
-  BadgeCheck,
-  MousePointerClick,
-  ShieldCheck,
-  Zap,
-  Wallet
-} from "lucide-react";
-
+import { BadgeCheck, MousePointerClick, ShieldCheck, Zap, Wallet } from "lucide-react";
 import "../style/LandingPage.css";
 
 const REASONS = [
-  {
-    icon: BadgeCheck,
-    title: "Verified Doctors",
-    desc: "Every doctor is credential-checked and license-verified before listing."
-  },
-  {
-    icon: MousePointerClick,
-    title: "Easy Booking",
-    desc: "Book an appointment in under a minute, from any device."
-  },
-  {
-    icon: ShieldCheck,
-    title: "Secure Data Privacy",
-    desc: "Your medical records and personal data stay encrypted, always."
-  },
-  {
-    icon: Zap,
-    title: "Instant Confirmation",
-    desc: "No waiting on hold — get your booking confirmed in real time."
-  },
-  {
-    icon: Wallet,
-    title: "Affordable Access",
-    desc: "Transparent pricing with no hidden fees on any consultation."
-  }
+  { icon: BadgeCheck, title: "Verified doctors", desc: "Credentials and licenses are checked before any doctor is listed." },
+  { icon: MousePointerClick, title: "Easy booking", desc: "Book from your phone or laptop in under a minute." },
+  { icon: ShieldCheck, title: "Private by default", desc: "Your records and personal details stay encrypted." },
+  { icon: Zap, title: "Instant confirmation", desc: "Your slot is confirmed in real time, so there is nothing to follow up on." },
+  { icon: Wallet, title: "Clear pricing", desc: "Consultation fees are shown up front, with no hidden charges." },
 ];
 
 function WhyChooseUs() {
-
   return (
-    <section className="why-section">
+    <section className="section">
+      <div className="wrap why">
+        <header className="why__head">
+          <h2>Healthcare booking that respects your time</h2>
+          <p>We built BookMyDoc around the things that usually go wrong when you try to see a doctor.</p>
+        </header>
 
-      <div className="why-container">
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="why-header"
-        >
-
-          <span className="why-tag">
-            WHY CHOOSE US
-          </span>
-
-          <h2>
-            Why Choose BookMyDoc
-          </h2>
-
-        </motion.div>
-
-        <div className="why-grid">
-
-          {REASONS.map(
-            (
-              {
-                icon: Icon,
-                title,
-                desc
-              },
-              i
-            ) => (
-
-              <motion.div
-                key={title}
-                initial={{
-                  opacity: 0,
-                  y: 20
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0
-                }}
-                viewport={{
-                  once: true
-                }}
-                transition={{
-                  duration: 0.45,
-                  delay: i * 0.08
-                }}
-                className="why-card"
-              >
-
-                <div className="why-icon">
-
-                  <Icon size={24} />
-
-                </div>
-
-                <h3>
-                  {title}
-                </h3>
-
-                <p>
-                  {desc}
-                </p>
-
-              </motion.div>
-
-            )
-          )}
-
-        </div>
-
+        <ul className="why__list">
+          {REASONS.map(({ icon: Icon, title, desc }) => (
+            <li key={title}>
+              <span className="why__icon"><Icon size={22} /></span>
+              <div>
+                <h3>{title}</h3>
+                <p>{desc}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
-
     </section>
   );
 }

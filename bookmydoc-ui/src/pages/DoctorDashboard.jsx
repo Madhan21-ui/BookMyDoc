@@ -1,402 +1,254 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
+import "../style/DoctorDashboard.css";
 
 function DoctorDashboard() {
-
     const navigate = useNavigate();
 
-    const doctorName =
-        localStorage.getItem("doctorName");
+    const doctorName = localStorage.getItem("doctorName");
+    const doctorId = localStorage.getItem("doctorId");
 
-    const doctorId =
-        localStorage.getItem("doctorId");
-
-    const [slotCount, setSlotCount] =
-        useState(0);
-
-    const [appointmentCount, setAppointmentCount] =
-        useState(0);
-
-    const [pendingCount, setPendingCount] =
-        useState(0);
-
-    const [approvedCount, setApprovedCount] =
-        useState(0);
-
-    const [appointments, setAppointments] =
-        useState([]);
+    const [slotCount, setSlotCount] = useState(0);
+    const [appointmentCount, setAppointmentCount] = useState(0);
+    const [pendingCount, setPendingCount] = useState(0);
+    const [approvedCount, setApprovedCount] = useState(0);
+    const [appointments, setAppointments] = useState([]);
 
     useEffect(() => {
-
         fetchSlots();
         fetchAppointments();
-
     }, []);
 
     const fetchSlots = async () => {
-
         try {
+            const response = await api.get(`/availability/doctor/${doctorId}`);
 
-            const response =
-                await api.get(
-                    `/availability/doctor/${doctorId}`
-                );
-
-            setSlotCount(
-                response.data.length
-            );
-
+            setSlotCount(response.data.length);
         } catch (error) {
-
             console.error(error);
         }
     };
 
     const fetchAppointments = async () => {
-
         try {
+            const response = await api.get(`/appointments/doctor/${doctorId}`);
 
-            const response =
-                await api.get(
-                    `/appointments/doctor/${doctorId}`
-                );
+            setAppointments(response.data);
+            setAppointmentCount(response.data.length);
 
-            setAppointments(
-                response.data
-            );
+            const pending = response.data.filter(
+                (appointment) => appointment.status === "PENDING"
+            ).length;
 
-            setAppointmentCount(
-                response.data.length
-            );
+            const approved = response.data.filter(
+                (appointment) => appointment.status === "APPROVED"
+            ).length;
 
-            const pending =
-                response.data.filter(
-                    appointment =>
-                        appointment.status ===
-                        "PENDING"
-                ).length;
-
-            const approved =
-                response.data.filter(
-                    appointment =>
-                        appointment.status ===
-                        "APPROVED"
-                ).length;
-
-            setPendingCount(
-                pending
-            );
-
-            setApprovedCount(
-                approved
-            );
-
+            setPendingCount(pending);
+            setApprovedCount(approved);
         } catch (error) {
-
             console.error(error);
         }
     };
 
+    const hour = new Date().getHours();
+    let greeting = "Good Evening";
+
+    if (hour < 12) {
+        greeting = "Good Morning";
+    } else if (hour < 18) {
+        greeting = "Good Afternoon";
+    }
+
+    const today = new Date().toLocaleDateString("en-IN", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+    });
+
     return (
+        <div className="dd-page">
+            <div className="dd-container">
 
-        <div
-            style={{
-                padding: "40px",
-                background: "#f8fafc",
-                minHeight: "100vh"
-            }}
-        >
+                {/* Header */}
 
-            {/* Header */}
+                <header className="dd-header">
+                    <div>
+                        <p className="dd-greeting">{greeting} 👋</p>
+                        <h1>{doctorName}</h1>
+                        <p className="dd-subtitle">
+                            Manage your appointments and availability
+                        </p>
+                    </div>
 
-            <div
-                style={{
-                    marginBottom: "35px"
-                }}
-            >
+                    <div className="dd-date">
+                        <span>📆</span>
+                        {today}
+                    </div>
+                </header>
 
-                <h1
-                    style={{
-                        fontSize: "42px",
-                        color: "#0f172a",
-                        marginBottom: "10px"
-                    }}
-                >
-                    👋 Welcome Back,
-                    <br />
-                    {doctorName}
-                </h1>
+                {/* Stats */}
 
-                <p
-                    style={{
-                        color: "#64748b",
-                        fontSize: "18px"
-                    }}
-                >
-                    Manage your appointments and availability
-                </p>
+                <section className="dd-stats">
+                    <DashboardCard
+                        icon="📅"
+                        title="Total Slots"
+                        value={slotCount}
+                        tone="blue"
+                    />
 
-                <p
-                    style={{
-                        color: "#94a3b8",
-                        marginTop: "10px"
-                    }}
-                >
-                    {new Date().toDateString()}
-                </p>
+                    <DashboardCard
+                        icon="👥"
+                        title="Appointments"
+                        value={appointmentCount}
+                        tone="violet"
+                    />
 
-            </div>
+                    <DashboardCard
+                        icon="⏳"
+                        title="Pending"
+                        value={pendingCount}
+                        tone="amber"
+                    />
 
-            {/* Stats */}
+                    <DashboardCard
+                        icon="✅"
+                        title="Approved"
+                        value={approvedCount}
+                        tone="green"
+                    />
+                </section>
 
-            <div
-                style={{
-                    display: "grid",
-                    gridTemplateColumns:
-                        "repeat(auto-fit,minmax(220px,1fr))",
-                    gap: "20px",
-                    marginBottom: "45px"
-                }}
-            >
+                {/* Quick Actions */}
 
-                <DashboardCard
-                    icon="📅"
-                    title="Total Slots"
-                    value={slotCount}
-                    color="#1976d2"
-                />
+                <section className="dd-section">
+                    <div className="dd-section-header">
+                        <h2>Quick Actions</h2>
+                        <p>Jump straight to what you need</p>
+                    </div>
 
-                <DashboardCard
-                    icon="👥"
-                    title="Appointments"
-                    value={appointmentCount}
-                    color="#16a34a"
-                />
+                    <div className="dd-actions">
+                        <ActionCard
+                            icon="📅"
+                            title="Manage Availability"
+                            desc="Create and manage slots"
+                            onClick={() => navigate("/doctor-availability")}
+                        />
 
-                <DashboardCard
-                    icon="⏳"
-                    title="Pending"
-                    value={pendingCount}
-                    color="#f59e0b"
-                />
+                        <ActionCard
+                            icon="👥"
+                            title="Appointments"
+                            desc="View patient requests"
+                            onClick={() => navigate("/doctor-appointments")}
+                        />
 
-                <DashboardCard
-                    icon="✅"
-                    title="Approved"
-                    value={approvedCount}
-                    color="#22c55e"
-                />
+                        <ActionCard
+                            icon="🕒"
+                            title="Previous Slots"
+                            desc="Review slot history"
+                            onClick={() => navigate("/doctor-slots")}
+                        />
 
-            </div>
+                        <ActionCard
+                            icon="👨‍⚕️"
+                            title="My Profile"
+                            desc="Update doctor information"
+                            onClick={() => navigate("/doctor-profile")}
+                        />
+                    </div>
+                </section>
 
-            {/* Quick Actions */}
+                {/* Recent Requests */}
 
-            <h2
-                style={{
-                    marginBottom: "20px",
-                    color: "#0f172a"
-                }}
-            >
-                Quick Actions
-            </h2>
+                <section className="dd-section">
+                    <div className="dd-section-header row">
+                        <div>
+                            <h2>Recent Appointment Requests</h2>
+                            <p>Your latest 5 patient requests</p>
+                        </div>
 
-            <div
-                style={{
-                    display: "grid",
-                    gridTemplateColumns:
-                        "repeat(auto-fit,minmax(260px,1fr))",
-                    gap: "20px"
-                }}
-            >
+                        {appointments.length > 0 && (
+                            <button
+                                className="dd-link-btn"
+                                onClick={() => navigate("/doctor-appointments")}
+                            >
+                                View all →
+                            </button>
+                        )}
+                    </div>
 
-                <ActionCard
-                    icon="📅"
-                    title="Manage Availability"
-                    desc="Create and manage slots"
-                    onClick={() =>
-                        navigate(
-                            "/doctor-availability"
-                        )
-                    }
-                />
-
-                <ActionCard
-                    icon="👥"
-                    title="Appointments"
-                    desc="View patient requests"
-                    onClick={() =>
-                        navigate(
-                            "/doctor-appointments"
-                        )
-                    }
-                />
-
-                <ActionCard
-                    icon="🕒"
-                    title="Previous Slots"
-                    desc="Review slot history"
-                    onClick={() =>
-                        navigate(
-                            "/doctor-slots"
-                        )
-                    }
-                />
-
-                <ActionCard
-                    icon="👨‍⚕️"
-                    title="My Profile"
-                    desc="Update doctor information"
-                    onClick={() =>
-                        navigate(
-                            "/doctor-profile"
-                        )
-                    }
-                />
-
-            </div>
-
-            {/* Recent Requests */}
-
-            <h2
-                style={{
-                    marginTop: "50px",
-                    marginBottom: "20px",
-                    color: "#0f172a"
-                }}
-            >
-                Recent Appointment Requests
-            </h2>
-
-            <div
-                style={{
-                    background: "white",
-                    borderRadius: "20px",
-                    padding: "20px",
-                    boxShadow:
-                        "0 10px 25px rgba(0,0,0,0.08)"
-                }}
-            >
-
-                {
-                    appointments.length === 0 ? (
-
-                        <h3>
-                            No Appointment Requests
-                        </h3>
-
-                    ) : (
-
-                        appointments
-                            .slice(0, 5)
-                            .map((appointment) => (
-
-                                <div
+                    <div className="dd-requests">
+                        {appointments.length === 0 ? (
+                            <div className="dd-empty">
+                                <div className="dd-empty-icon">📭</div>
+                                <h3>No Appointment Requests</h3>
+                                <p>New patient requests will show up here.</p>
+                            </div>
+                        ) : (
+                            appointments.slice(0, 5).map((appointment) => (
+                                <RequestRow
                                     key={appointment.id}
-                                    style={{
-                                        padding: "15px",
-                                        borderBottom:
-                                            "1px solid #e5e7eb"
-                                    }}
-                                >
-
-                                    <h4>
-                                        👤 {appointment.patientName}
-                                    </h4>
-
-                                    <p>
-                                        📅 {appointment.appointmentDate}
-                                    </p>
-
-                                    <p>
-                                        ⏰ {appointment.appointmentTime}
-                                    </p>
-
-                                    <p>
-                                        Status:
-                                        {" "}
-                                        <strong>
-                                            {appointment.status}
-                                        </strong>
-                                    </p>
-
-                                </div>
-
+                                    appointment={appointment}
+                                />
                             ))
-
-                    )
-                }
+                        )}
+                    </div>
+                </section>
 
             </div>
-
         </div>
     );
 }
 
-function DashboardCard({
-    icon,
-    title,
-    value,
-    color
-}) {
-
+function DashboardCard({ icon, title, value, tone }) {
     return (
+        <div className={`dd-stat-card tone-${tone}`}>
+            <div className="dd-stat-icon">{icon}</div>
 
-        <div
-            style={{
-                background: "white",
-                padding: "25px",
-                borderRadius: "20px",
-                boxShadow:
-                    "0 10px 25px rgba(0,0,0,0.08)"
-            }}
-        >
-
-            <h2>{icon}</h2>
-
-            <h3>{title}</h3>
-
-            <p
-                style={{
-                    fontSize: "34px",
-                    fontWeight: "bold",
-                    color
-                }}
-            >
-                {value}
-            </p>
-
+            <div>
+                <p className="dd-stat-value">{value}</p>
+                <p className="dd-stat-title">{title}</p>
+            </div>
         </div>
     );
 }
 
-function ActionCard({
-    icon,
-    title,
-    desc,
-    onClick
-}) {
+function ActionCard({ icon, title, desc, onClick }) {
+    return (
+        <div className="dd-action-card" onClick={onClick}>
+            <div className="dd-action-icon">{icon}</div>
+
+            <div className="dd-action-text">
+                <h3>{title}</h3>
+                <p>{desc}</p>
+            </div>
+
+            <span className="dd-action-arrow">→</span>
+        </div>
+    );
+}
+
+function RequestRow({ appointment }) {
+    const status = (appointment.status || "PENDING").toUpperCase();
 
     return (
+        <div className="dd-request-row">
+            <div className="dd-request-avatar">
+                {appointment.patientName?.charAt(0).toUpperCase()}
+            </div>
 
-        <div
-            onClick={onClick}
-            style={{
-                background: "white",
-                padding: "30px",
-                borderRadius: "18px",
-                cursor: "pointer",
-                boxShadow:
-                    "0 10px 25px rgba(0,0,0,0.08)"
-            }}
-        >
+            <div className="dd-request-info">
+                <h4>{appointment.patientName}</h4>
 
-            <h2>{icon}</h2>
+                <div className="dd-request-meta">
+                    <span>📅 {appointment.appointmentDate}</span>
+                    <span>⏰ {appointment.appointmentTime}</span>
+                </div>
+            </div>
 
-            <h3>{title}</h3>
-
-            <p>{desc}</p>
-
+            <span className={`dd-badge ${status}`}>{appointment.status}</span>
         </div>
     );
 }

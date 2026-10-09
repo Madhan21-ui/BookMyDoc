@@ -1,124 +1,32 @@
-import { motion } from "framer-motion";
-import {
-  Search,
-  CalendarCheck,
-  BadgeCheck,
-  Stethoscope
-} from "lucide-react";
-
+import { Search, CalendarCheck, BadgeCheck, Stethoscope } from "lucide-react";
 import "../style/LandingPage.css";
 
 const STEPS = [
-  {
-    icon: Search,
-    title: "Find a Doctor",
-    desc: "Search and explore experienced doctors based on speciality and expertise."
-  },
-  {
-    icon: CalendarCheck,
-    title: "Choose a Time Slot",
-    desc: "Check real-time availability and select a convenient appointment slot."
-  },
-  {
-    icon: BadgeCheck,
-    title: "Book Appointment",
-    desc: "Confirm your appointment instantly with secure booking."
-  },
-  {
-    icon: Stethoscope,
-    title: "Consult Doctor",
-    desc: "Meet your doctor at the scheduled date and time."
-  }
+  { icon: Search, title: "Find a doctor", desc: "Search by speciality, hospital or name and compare ratings." },
+  { icon: CalendarCheck, title: "Choose a time slot", desc: "See live availability and pick a slot that fits your day." },
+  { icon: BadgeCheck, title: "Confirm your booking", desc: "Get instant confirmation, with no calls and no waiting on hold." },
+  { icon: Stethoscope, title: "Meet your doctor", desc: "Show up at the scheduled time and focus on your health." },
 ];
 
 function HowItWorks() {
-
   return (
-    <section className="how-section">
+    <section id="about" className="how">
+      <div className="wrap">
+        <header className="section__head section__head--light">
+          <h2>Book in four steps, usually under a minute</h2>
+        </header>
 
-      <div className="how-container">
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          whileHover={{
-            y: -8,
-            scale: 1.03
-          }}
-          className="how-header"
-        >
-
-          <span className="how-tag">
-            HOW IT WORKS
-          </span>
-
-          <h2>
-            Book Your Appointment in 4 Simple Steps
-          </h2>
-
-        </motion.div>
-
-        <div className="steps-grid">
-
-          {STEPS.map(
-            (
-              {
-                icon: Icon,
-                title,
-                desc
-              },
-              i
-            ) => (
-
-              <motion.div
-                key={title}
-                initial={{
-                  opacity: 0,
-                  y: 24
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0
-                }}
-                viewport={{
-                  once: true
-                }}
-                transition={{
-                  duration: 0.45,
-                  delay: i * 0.1
-                }}
-                className="step-card"
-              >
-
-                <div className="step-icon">
-
-                  <Icon size={28} />
-
-                  <span className="step-number">
-                    {i + 1}
-                  </span>
-
-                </div>
-
-                <h3>
-                  {title}
-                </h3>
-
-                <p>
-                  {desc}
-                </p>
-
-              </motion.div>
-
-            )
-          )}
-
-        </div>
-
+        <ol className="how__steps">
+          {STEPS.map(({ icon: Icon, title, desc }, i) => (
+            <li key={title} className="how__step">
+              <span className="how__num">{i + 1}</span>
+              <Icon size={26} className="how__icon" />
+              <h3>{title}</h3>
+              <p>{desc}</p>
+            </li>
+          ))}
+        </ol>
       </div>
-
     </section>
   );
 }

@@ -1,119 +1,47 @@
 import { Link } from "react-router-dom";
-import {
-  Stethoscope,
-  Mail,
-  Phone,
-  MapPin,
-} from "lucide-react";
-
+import { Stethoscope, Mail, Phone, MapPin } from "lucide-react";
 import "../style/LandingPage.css";
 
-const QUICK_LINKS = [
-  { label: "Home", href: "#home" },
-  { label: "Find Doctors", href: "#doctors" },
-  { label: "Specialities", href: "#specialities" },
-  { label: "About", href: "#about" }
+const EXPLORE = [
+  { label: "Find doctors", to: "/doctors" },
+  { label: "My appointments", to: "/appointments" },
+  { label: "Sign in", to: "/auth" },
+  { label: "For doctors", to: "/doctor-login" },
 ];
 
-const SUPPORT_LINKS = [
-  { label: "Help Center", href: "#" },
-  { label: "Privacy Policy", href: "#" },
-  { label: "Terms of Service", href: "#" },
-  { label: "FAQs", href: "#" }
-];
-
-
+const SUPPORT = ["Help center", "Privacy policy", "Terms of service", "FAQs"];
 
 function Footer() {
-
   return (
-    <footer className="footer">
-
-      <div className="footer-container">
-
-        <div className="footer-column">
-
-          <Link to="/" className="footer-logo">
-
-            <div className="footer-logo-icon">
-              <Stethoscope size={18} />
-            </div>
-
-            <span>
-              BookMy<span>Doc</span>
-            </span>
-
+    <footer id="contact" className="footer">
+      <div className="wrap footer__grid">
+        <div className="footer__about">
+          <Link to="/" className="brand brand--light">
+            <span className="brand__mark"><Stethoscope size={18} strokeWidth={2.4} /></span>
+            <span className="brand__name">BookMy<b>Doc</b></span>
           </Link>
-
-          <p className="footer-description">
-            Connecting patients with trusted doctors
-            for fast, secure and transparent healthcare
-            booking.
-          </p>
-
-         
-
+          <p>Connecting patients with trusted doctors for fast, secure and transparent booking.</p>
         </div>
 
-        <div className="footer-column">
+        <nav className="footer__col" aria-label="Explore">
+          <h4>Explore</h4>
+          {EXPLORE.map((l) => <Link key={l.label} to={l.to}>{l.label}</Link>)}
+        </nav>
 
-          <h4>Quick Links</h4>
-
-          {QUICK_LINKS.map(link => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="footer-link"
-            >
-              {link.label}
-            </a>
-          ))}
-
-        </div>
-
-        <div className="footer-column">
-
+        <nav className="footer__col" aria-label="Support">
           <h4>Support</h4>
+          {SUPPORT.map((l) => <a key={l} href="#contact">{l}</a>)}
+        </nav>
 
-          {SUPPORT_LINKS.map(link => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="footer-link"
-            >
-              {link.label}
-            </a>
-          ))}
-
+        <div className="footer__col">
+          <h4>Contact us</h4>
+          <p className="footer__item"><MapPin size={16} />Vijayawada, Andhra Pradesh</p>
+          <p className="footer__item"><Phone size={16} />+91 98765 43210</p>
+          <p className="footer__item"><Mail size={16} />support@bookmydoc.com</p>
         </div>
-
-        <div className="footer-column">
-
-          <h4>Contact Us</h4>
-
-          <div className="contact-item">
-            <MapPin size={16} />
-            <span>Vijayawada, Andhra Pradesh</span>
-          </div>
-
-          <div className="contact-item">
-            <Phone size={16} />
-            <span>+91 98765 43210</span>
-          </div>
-
-          <div className="contact-item">
-            <Mail size={16} />
-            <span>support@bookmydoc.com</span>
-          </div>
-
-        </div>
-
       </div>
 
-      <div className="footer-bottom">
-        © 2026 BookMyDoc. All Rights Reserved.
-      </div>
-
+      <div className="footer__bottom">© 2026 BookMyDoc. All rights reserved.</div>
     </footer>
   );
 }

@@ -1,90 +1,82 @@
 import { useEffect, useState } from "react";
+import { Building2, GraduationCap, ArrowRight } from "lucide-react";
 import api from "../services/api";
 import "../style/Dashboard.css";
 
-function RecommendedDoctors() {
+function displayName(name = "") {
+    if (!name) return "Doctor";
 
+    return /^dr\.?\s/i.test(name) ? name : `Dr. ${name}`;
+}
+
+function RecommendedDoctors() {
     const [doctors, setDoctors] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-
         api.get("/doctors")
-            .then((response) => {
-
-                setDoctors(response.data);
-
-            })
-            .catch((error) => {
-
-                console.error(error);
-
-            });
-
+            .then((response) => setDoctors(response.data))
+            .catch((error) => console.error(error))
+            .finally(() => setLoading(false));
     }, []);
 
     return (
-
         <section className="recommended-section">
-
             <div className="section-header">
+                <div>
+                    <h2>Recommended Doctors</h2>
+                    <p>Top specialists available for consultation</p>
+                </div>
 
-                <h2>
-                    Recommended Doctors
-                </h2>
-
-                <p>
-                    Top specialists available for consultation
-                </p>
-
+                <a href="/doctors" className="section-link">
+                    See all doctors <ArrowRight size={16} />
+                </a>
             </div>
 
             <div className="recommended-grid">
+                {loading
+                    ? [0, 1, 2].map((i) => <div key={i} className="skeleton skeleton--card" />)
+                    : doctors.slice(0, 3).map((doctor) => (
+                        <div key={doctor.id} className="recommended-card">
+                            <div className="doctor-top">
+                                <div className="doctor-avatar">
+                                    {(doctor.name || "D")
+                                        .replace(/^dr\.?\s*/i, "")
+                                        .charAt(0)
+                                        .toUpperCase()}
+                                </div>
 
-                {doctors.slice(0, 3).map((doctor) => (
+                                <div>
+                                    <h3>{displayName(doctor.name)}</h3>
+                                    <p className="doctor-speciality">{doctor.specialization}</p>
+                                </div>
+                            </div>
 
-                    <div
-                        key={doctor.id}
-                        className="recommended-card"
-                    >
+                            <ul className="doctor-meta">
+                                <li>
+                                    <GraduationCap size={16} />
+                                    {doctor.experience} years of experience
+                                </li>
 
-                        <div className="doctor-avatar">
-                            👨‍⚕️
+                                <li>
+                                    <Building2 size={16} />
+                                    {doctor.hospitalName}
+                                </li>
+                            </ul>
+
+                            <button
+                                className="book-now-btn"
+                                onClick={() =>
+                                    (window.location.href = `/doctors/${doctor.id}`)
+                                }
+                            >
+                                View Profile
+                                <ArrowRight size={16} />
+                            </button>
                         </div>
-
-                        <h3>
-                            {doctor.name}
-                        </h3>
-
-                        <p className="doctor-speciality">
-                            {doctor.specialization}
-                        </p>
-
-                        <p className="doctor-exp">
-                            {doctor.experience} Years Experience
-                        </p>
-
-                        <p className="doctor-hospital">
-                            🏥 {doctor.hospitalName}
-                        </p>
-
-                        <button
-                            className="book-now-btn"
-                            onClick={() =>
-                                window.location.href =
-                                `/doctors/${doctor.id}`
-                            }
-                        >
-                            View Profile
-                        </button>
-
-                    </div>
-
-                ))}
-
+                    ))}
             </div>
-
         </section>
-
     );
 }
 
